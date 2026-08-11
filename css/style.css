@@ -1,265 +1,632 @@
+/* ========================================
+   RESET
+======================================== */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+
+html,
 body {
-    background: #f5f5f5;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                 "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-    color: #222;
+    width: 100%;
+    height: 100%;
 }
 
 
-/* 전체 */
+body {
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Apple SD Gothic Neo",
+        "Noto Sans KR",
+        "Segoe UI",
+        sans-serif;
+
+    color: #222;
+
+    background: #a9bfd0;
+}
+
+
+
+/* ========================================
+   전체
+======================================== */
 
 .archive {
+
     width: 100%;
     min-height: 100vh;
+
+    background: #a9bfd0;
+
 }
 
 
-/* =========================
-   HEADER
-========================= */
 
-.header {
+/* ========================================
+   상단 날짜 영역
+======================================== */
+
+.top-bar {
+
     position: sticky;
-    top: 0;
-    z-index: 10;
 
-    height: 90px;
+    top: 0;
+
+    z-index: 20;
+
+    width: 100%;
+
+    height: 180px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    padding: 0 40px;
+    padding: 0 60px;
 
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(12px);
+    background: rgba(169, 191, 208, 0.95);
 
-    border-bottom: 1px solid #e8e8e8;
+    backdrop-filter: blur(8px);
+
 }
 
 
-/* 제목 */
 
-.title-area {
+/* ========================================
+   날짜 버튼
+======================================== */
+
+.date-area {
+
+    position: relative;
+
     display: flex;
-    align-items: baseline;
-    gap: 10px;
-}
 
-.title-area h1 {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-}
-
-.title-area p {
-    font-size: 11px;
-    color: #999;
-    letter-spacing: 0.12em;
-}
-
-
-/* =========================
-   DATE SELECTOR
-========================= */
-
-.date-selector {
-    display: flex;
     align-items: center;
-    gap: 8px;
+
+    justify-content: center;
+
 }
 
 
-/* 이전 / 다음 */
 
-.date-arrow {
-    width: 34px;
-    height: 34px;
+/*
+   실제 버튼
 
-    border: none;
-    background: transparent;
-
-    font-size: 25px;
-    color: #777;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-.date-arrow:hover {
-    color: #111;
-}
-
-
-/* 날짜 버튼 */
+   날짜를 누르면
+   숨겨진 date input이 열림
+*/
 
 .date-button {
-    min-width: 150px;
-    height: 38px;
 
-    padding: 0 18px;
+    border: none;
 
-    border: 1px solid #ddd;
-    border-radius: 20px;
+    background: transparent;
 
-    background: white;
+    color: #292929;
 
-    font-size: 14px;
+    font-size: clamp(26px, 3vw, 38px);
+
+    font-weight: 700;
+
+    letter-spacing: -0.04em;
 
     cursor: pointer;
 
-    transition: 0.2s;
+    padding: 10px 20px;
+
+    transition: opacity 0.2s ease;
+
 }
 
+
 .date-button:hover {
-    border-color: #aaa;
+
+    opacity: 0.65;
+
 }
+
 
 
 /* 실제 날짜 input */
 
 .date-picker {
+
     position: absolute;
 
     width: 1px;
+
     height: 1px;
 
     opacity: 0;
+
     pointer-events: none;
+
 }
 
 
-/* =========================
-   CHAT
-========================= */
+
+/* ========================================
+   이전 / 다음 버튼
+======================================== */
+
+.date-nav {
+
+    width: 106px;
+
+    height: 106px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 15px rgba(70, 90, 105, 0.08);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.date-nav span {
+
+    font-size: 28px;
+
+    line-height: 1;
+
+}
+
+
+.date-nav.prev span {
+
+    color: #b4b4b4;
+
+}
+
+
+.date-nav.next span {
+
+    color: #1687e8;
+
+}
+
+
+.date-nav:hover {
+
+    transform: scale(1.04);
+
+    box-shadow:
+        0 8px 22px rgba(70, 90, 105, 0.14);
+
+}
+
+
+.date-nav:active {
+
+    transform: scale(0.97);
+
+}
+
+
+
+/* ========================================
+   채팅 영역
+======================================== */
 
 .chat-container {
-    width: min(760px, calc(100% - 40px));
+
+    width: min(1100px, calc(100% - 120px));
 
     margin: 0 auto;
 
-    padding: 40px 0 100px;
+    padding:
+
+        10px
+        0
+        120px;
+
 }
 
 
-/* 날짜 */
 
-.chat-date {
-    width: fit-content;
-
-    margin: 0 auto 40px;
-
-    padding: 7px 14px;
-
-    border-radius: 20px;
-
-    background: #e5e5e5;
-
-    color: #777;
-
-    font-size: 12px;
-}
-
-
-/* 메시지 영역 */
+/* ========================================
+   메시지 전체
+======================================== */
 
 .chat-messages {
+
     display: flex;
+
     flex-direction: column;
 
-    gap: 7px;
+    gap: 18px;
+
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+
+/* ========================================
+   메시지 한 개
+======================================== */
 
 .message-row {
+
     display: flex;
-    justify-content: flex-end;
 
     align-items: flex-end;
 
-    gap: 6px;
+    justify-content: flex-start;
 
-    margin-bottom: 5px;
+    gap: 20px;
+
+    width: 100%;
+
 }
 
 
-/* 메시지 */
+
+/* ========================================
+   프로필
+======================================== */
+
+.profile {
+
+    width: 76px;
+
+    height: 76px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    background: #ddd;
+
+}
+
+
+
+/* ========================================
+   메시지 내용 전체
+======================================== */
+
+.message-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    max-width: calc(100% - 120px);
+
+}
+
+
+
+/* ========================================
+   발신자 이름
+======================================== */
+
+.sender-name {
+
+    margin-bottom: 6px;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    color: #222;
+
+    letter-spacing: -0.04em;
+
+}
+
+
+
+/* ========================================
+   말풍선 + 시간
+======================================== */
+
+.message-line {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 10px;
+
+}
+
+
+
+/* ========================================
+   말풍선
+======================================== */
 
 .message-bubble {
-    max-width: 70%;
 
-    padding: 10px 13px;
+    max-width: min(760px, 70vw);
 
-    background: #fee500;
+    padding:
 
-    border-radius: 4px 4px 0 4px;
+        20px
+        30px;
 
-    font-size: 14px;
+    border-radius:
+
+        0
+        36px
+        36px
+        36px;
+
+    background: #ffffff;
+
+    color: #151515;
+
+    font-size: 22px;
 
     line-height: 1.5;
 
-    white-space: pre-wrap;
+    letter-spacing: -0.035em;
 
-    word-break: break-word;
+    word-break: keep-all;
+
+    overflow-wrap: break-word;
+
+    box-shadow:
+        0 2px 3px rgba(70, 90, 105, 0.03);
+
 }
 
 
-/* 시간 */
+
+/* ========================================
+   시간
+======================================== */
 
 .message-time {
-    font-size: 10px;
-    color: #999;
+
+    flex-shrink: 0;
+
+    margin-bottom: 5px;
+
+    color: #687d8d;
+
+    font-size: 15px;
+
+    line-height: 1.2;
 
     white-space: nowrap;
+
 }
 
 
-/* 사진 */
+
+/* ========================================
+   이미지 메시지
+======================================== */
+
+.image-bubble {
+
+    padding: 0;
+
+    overflow: hidden;
+
+    background: transparent;
+
+}
+
 
 .message-image {
-    max-width: 260px;
-
-    border-radius: 8px;
 
     display: block;
+
+    width: auto;
+
+    max-width: min(500px, 65vw);
+
+    max-height: 500px;
+
+    border-radius:
+
+        0
+        30px
+        30px
+        30px;
+
+    object-fit: contain;
+
 }
 
 
-/* =========================
+
+/* ========================================
+   로딩
+======================================== */
+
+.loading {
+
+    width: 100%;
+
+    padding: 60px 0;
+
+    text-align: center;
+
+    color: #687d8d;
+
+    font-size: 15px;
+
+}
+
+
+
+/* ========================================
+   대화 없음
+======================================== */
+
+.empty-message {
+
+    padding: 100px 20px;
+
+    text-align: center;
+
+    color: #687d8d;
+
+    font-size: 16px;
+
+}
+
+
+
+/* ========================================
    모바일
-========================= */
+======================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 
-    .header {
-        height: auto;
 
-        padding: 18px 20px;
+    .top-bar {
 
-        flex-direction: column;
+        height: 115px;
 
-        gap: 15px;
+        padding: 0 18px;
+
     }
+
+
+    .date-button {
+
+        font-size: 19px;
+
+        padding: 8px;
+
+    }
+
+
+    .date-nav {
+
+        width: 58px;
+
+        height: 58px;
+
+    }
+
+
+    .date-nav span {
+
+        font-size: 17px;
+
+    }
+
 
     .chat-container {
-        width: calc(100% - 24px);
 
-        padding-top: 25px;
+        width: calc(100% - 30px);
+
+        padding-bottom: 80px;
+
     }
 
+
+    .chat-messages {
+
+        gap: 14px;
+
+    }
+
+
+    .message-row {
+
+        gap: 10px;
+
+    }
+
+
+    .profile {
+
+        width: 48px;
+
+        height: 48px;
+
+    }
+
+
+    .message-content {
+
+        max-width: calc(100% - 58px);
+
+    }
+
+
+    .sender-name {
+
+        font-size: 15px;
+
+        margin-bottom: 4px;
+
+    }
+
+
     .message-bubble {
-        max-width: 80%;
+
+        max-width: 75vw;
+
+        padding:
+
+            12px
+            17px;
+
+        border-radius:
+
+            0
+            22px
+            22px
+            22px;
+
+        font-size: 16px;
+
+        line-height: 1.45;
+
+    }
+
+
+    .message-time {
+
+        font-size: 10px;
+
+    }
+
+
+    .message-image {
+
+        max-width: 65vw;
+
+        max-height: 350px;
+
     }
 
 }
