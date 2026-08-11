@@ -4,11 +4,11 @@
 
 
 // 현재 처음 열 날짜
-let currentDate = new Date(2021, 9, 7);
+let currentDate = new Date(2026, 8, 11);
 
 
 // 발신자 이름
-const SENDER_NAME = "키욱이";
+const SENDER_NAME = "서준";
 
 
 // 프로필 이미지
