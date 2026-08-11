@@ -1,21 +1,72 @@
-kakao-archive/
-│
-├── index.html
-│
-├── css/
-│   └── style.css
-│
-├── js/
-│   └── script.js
-│
-├── data/
-│   ├── 2026-08-08.json
-│   ├── 2026-08-09.json
-│   ├── 2026-08-10.json
-│   └── 2026-08-11.json
-│
-└── assets/
-    ├── profile/
-    │   └── profile.png
-    │
-    └── images/
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KakaoTalk Archive</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="archive">
+
+        <!-- HEADER -->
+        <header class="header">
+
+            <div class="title-area">
+                <h1>KAKAOTALK</h1>
+                <p>ARCHIVE</p>
+            </div>
+
+            <!-- 날짜 선택 -->
+            <div class="date-selector">
+
+                <button id="prevDate" class="date-arrow">
+                    ‹
+                </button>
+
+                <button id="dateButton" class="date-button">
+                    2026. 08. 11
+                </button>
+
+                <button id="nextDate" class="date-arrow">
+                    ›
+                </button>
+
+                <!-- 실제 날짜 선택 input -->
+                <input
+                    type="date"
+                    id="datePicker"
+                    class="date-picker"
+                >
+
+            </div>
+
+        </header>
+
+
+        <!-- CHAT -->
+        <main class="chat-container">
+
+            <div class="chat-date" id="chatDate">
+                2026년 8월 11일
+            </div>
+
+            <div id="chatMessages" class="chat-messages">
+
+                <!-- JavaScript가 대화를 넣어줌 -->
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/script.js"></script>
+
+</body>
+</html>
