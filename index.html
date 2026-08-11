@@ -1,39 +1,55 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>서준🦊</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="css/style.css">
+    <title>한서준🦊</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 </head>
+
 
 <body>
 
     <div class="archive">
 
-        <!-- HEADER -->
-        <header class="header">
 
-            <div class="title-area">
-                <h1>서준</h1>
-                <p>🦊</p>
-            </div>
+        <!-- =========================
+             상단 날짜 영역
+        ========================== -->
 
-            <!-- 날짜 선택 -->
-            <div class="date-selector">
+        <header class="top-bar">
 
-                <button id="prevDate" class="date-arrow">
-                    ‹
-                </button>
 
-                <button id="dateButton" class="date-button">
-                    2026. 08. 11
-                </button>
+            <!-- 이전 날짜 -->
 
-                <button id="nextDate" class="date-arrow">
-                    ›
+            <button
+                id="prevDate"
+                class="date-nav prev"
+                aria-label="이전 날짜"
+            >
+                <span>◀</span>
+            </button>
+
+
+            <!-- 날짜 -->
+
+            <div class="date-area">
+
+                <button
+                    id="dateButton"
+                    class="date-button"
+                >
+                    2021년 10월 7일 목요일
                 </button>
 
                 <!-- 실제 날짜 선택 input -->
@@ -45,23 +61,37 @@
 
             </div>
 
+
+            <!-- 다음 날짜 -->
+
+            <button
+                id="nextDate"
+                class="date-nav next"
+                aria-label="다음 날짜"
+            >
+                <span>▶</span>
+            </button>
+
+
         </header>
 
 
-        <!-- CHAT -->
+
+        <!-- =========================
+             대화 영역
+        ========================== -->
+
         <main class="chat-container">
 
-            <div class="chat-date" id="chatDate">
-                2026년 8월 11일
-            </div>
-
-            <div id="chatMessages" class="chat-messages">
-
-                <!-- JavaScript가 대화를 넣어줌 -->
-
+            <div
+                id="chatMessages"
+                class="chat-messages"
+            >
+                <!-- JavaScript가 메시지를 넣음 -->
             </div>
 
         </main>
+
 
     </div>
 
@@ -69,4 +99,5 @@
     <script src="js/script.js"></script>
 
 </body>
+
 </html>
