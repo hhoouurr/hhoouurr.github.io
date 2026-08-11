@@ -4,7 +4,7 @@
 
 
 // 현재 처음 열 날짜
-let currentDate = new Date(2026, 8, 11);
+let currentDate = new Date(2026, 7, 11);
 
 
 // 발신자 이름
