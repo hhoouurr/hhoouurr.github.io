@@ -38,5 +38,15 @@
         "type": "text",
         "time": "오후 01:00",
         "message": "셋"
-    }
+    },
+    {
+        "type": "image",
+        "time": "오후 02:31",
+        "src": "assets/images/001.jpg"
+    },
+    {
+        "type": "text",
+        "time": "오후 02:00",
+        "message": "짠! 사진 테스트!"
+    },
 ]
