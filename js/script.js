@@ -527,6 +527,19 @@ datePicker.addEventListener(
    시작
 ======================================== */
 
-updateDateUI();
+async function initialize() {
 
-loadMessages();
+    await loadAvailableDates();
+
+    updateDateUI();
+
+    loadMessages();
+
+    calendarMonth =
+        currentDate.getMonth();
+
+    renderCalendar();
+
+}
+
+initialize();
