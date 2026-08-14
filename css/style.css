@@ -874,3 +874,346 @@ body {
     }
 
 }
+/* ========================================
+   CALENDAR OVERLAY
+======================================== */
+
+.calendar-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(20, 25, 30, 0.45);
+
+    backdrop-filter: blur(3px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+
+    z-index: 9999;
+
+}
+
+
+/* 열렸을 때 */
+
+.calendar-overlay.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+}
+
+
+/* ========================================
+   CALENDAR BOX
+======================================== */
+
+.calendar {
+
+    position: relative !important;
+
+    top: auto !important;
+
+    left: auto !important;
+
+    right: auto !important;
+
+    transform: none !important;
+
+    width: min(100%, 420px) !important;
+
+    padding: 28px !important;
+
+    border-radius: 24px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.18);
+
+    opacity: 1 !important;
+
+    visibility: visible !important;
+
+    pointer-events: auto !important;
+
+}
+
+
+/* ========================================
+   MONTH SELECT
+======================================== */
+
+.calendar-months {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    margin-bottom: 28px;
+
+}
+
+
+.month-button {
+
+    flex: none;
+
+    border: none;
+
+    border-radius: 999px;
+
+    padding: 8px 13px;
+
+    background: transparent;
+
+    color: #9aa1a8;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+.month-button:hover {
+
+    background: #f2f3f4;
+
+}
+
+
+.month-button.active {
+
+    background: #222;
+
+    color: #fff;
+
+    font-weight: 500;
+
+}
+
+
+/* ========================================
+   WEEKDAY
+======================================== */
+
+.calendar-weekdays {
+
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    margin-bottom: 12px;
+
+}
+
+
+.calendar-weekdays span {
+
+    text-align: center;
+
+    color: #a5a5a5;
+
+    font-size: 12px;
+
+    font-weight: 400;
+
+}
+
+
+/* ========================================
+   DAYS
+======================================== */
+
+.calendar-days {
+
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 5px;
+
+}
+
+
+.calendar-day {
+
+    position: relative;
+
+    aspect-ratio: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #333;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+
+}
+
+
+.calendar-day:hover:not(.empty) {
+
+    background: #f2f2f2;
+
+}
+
+
+/* 선택된 날짜 */
+
+.calendar-day.selected {
+
+    background: #222;
+
+    color: white;
+
+}
+
+
+/* 데이터가 있는 날짜 점 */
+
+.calendar-day.has-data::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 4px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 3px;
+
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: #777;
+
+}
+
+
+/* 선택된 날짜의 점 */
+
+.calendar-day.selected.has-data::after {
+
+    background: #fff;
+
+}
+
+
+/* 빈칸 */
+
+.calendar-day.empty {
+
+    pointer-events: none;
+
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+
+    .calendar-overlay {
+
+        padding: 20px;
+
+        align-items: center;
+
+    }
+
+
+    .calendar {
+
+        width: 100% !important;
+
+        max-width: 380px;
+
+        padding: 24px 18px !important;
+
+        border-radius: 22px;
+
+    }
+
+
+    .calendar-months {
+
+        gap: 3px;
+
+        margin-bottom: 24px;
+
+    }
+
+
+    .month-button {
+
+        padding: 7px 10px;
+
+        font-size: 13px;
+
+    }
+
+
+    .calendar-days {
+
+        gap: 4px;
+
+    }
+
+
+    .calendar-day {
+
+        font-size: 14px;
+
+    }
+
+}
