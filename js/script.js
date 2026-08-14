@@ -782,7 +782,6 @@ monthButtons.forEach(
                         button.dataset.month
                     );
 
-
                 renderCalendar();
 
             }
