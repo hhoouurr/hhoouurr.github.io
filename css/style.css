@@ -558,3 +558,319 @@ body {
         max-height: 400px;
     }
 }
+/* ========================================
+   CUSTOM CALENDAR
+======================================== */
+
+.calendar {
+
+    position: absolute;
+
+    top: calc(100% + 18px);
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 430px;
+
+    padding: 24px;
+
+    border-radius: 28px;
+
+    background: rgba(255, 255, 255, 0.97);
+
+    box-shadow:
+        0 18px 50px rgba(48, 70, 85, 0.18);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+
+    z-index: 100;
+
+}
+
+
+/* 열렸을 때 */
+
+.calendar.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+}
+
+
+/* ========================================
+   MONTH BUTTONS
+======================================== */
+
+.calendar-months {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 5px;
+
+    margin-bottom: 24px;
+
+}
+
+
+.month-button {
+
+    flex: 1;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 10px 5px;
+
+    background: transparent;
+
+    color: #7d8790;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+}
+
+
+.month-button:hover {
+
+    background: #eef3f6;
+
+}
+
+
+.month-button.active {
+
+    background: #e2edf4;
+
+    color: #1687e8;
+
+    font-weight: 700;
+
+}
+
+
+/* ========================================
+   CALENDAR TITLE
+======================================== */
+
+.calendar-title {
+
+    margin-bottom: 20px;
+
+    text-align: center;
+
+    color: #252b30;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+}
+
+
+/* ========================================
+   WEEKDAYS
+======================================== */
+
+.calendar-weekdays {
+
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    margin-bottom: 8px;
+
+}
+
+
+.calendar-weekdays span {
+
+    text-align: center;
+
+    color: #9ba5ad;
+
+    font-size: 13px;
+
+}
+
+
+.calendar-weekdays span:first-child {
+
+    color: #d48484;
+
+}
+
+
+.calendar-weekdays span:last-child {
+
+    color: #7d9fc1;
+
+}
+
+
+/* ========================================
+   DAYS
+======================================== */
+
+.calendar-days {
+
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    row-gap: 8px;
+
+}
+
+
+/* 날짜 하나 */
+
+.calendar-day {
+
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: transparent;
+
+    color: #343a3f;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+}
+
+
+/* 빈 공간 */
+
+.calendar-day.empty {
+
+    pointer-events: none;
+
+}
+
+
+/* 마우스 */
+
+.calendar-day:hover:not(.empty) {
+
+    background: #edf3f7;
+
+}
+
+
+/* 선택된 날짜 */
+
+.calendar-day.selected {
+
+    background: #dceaf3;
+
+    color: #1687e8;
+
+    font-weight: 700;
+
+}
+
+
+/* ========================================
+   DATA DOT
+======================================== */
+
+.calendar-day.has-data::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 5px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 4px;
+
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: #1687e8;
+
+}
+
+
+/* 선택된 날짜의 점 */
+
+.calendar-day.selected.has-data::after {
+
+    background: #1687e8;
+
+}
+
+
+/* ========================================
+   MOBILE CALENDAR
+======================================== */
+
+@media (max-width: 600px) {
+
+    .calendar {
+
+        position: fixed;
+
+        top: 115px;
+
+        left: 15px;
+
+        right: 15px;
+
+        width: auto;
+
+        transform: none;
+
+        padding: 20px;
+
+    }
+
+    .calendar.active {
+
+        transform: none;
+
+    }
+
+}
