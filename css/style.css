@@ -1217,3 +1217,311 @@ body {
     }
 
 }
+/* ========================================
+   CALENDAR OVERLAY
+======================================== */
+
+.calendar-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.42);
+
+    backdrop-filter: blur(2px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+
+    z-index: 9999;
+
+}
+
+
+.calendar-overlay.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+}
+
+
+
+/* ========================================
+   CALENDAR
+======================================== */
+
+.calendar {
+
+    width: 100%;
+
+    max-width: 420px;
+
+    box-sizing: border-box;
+
+    padding: 28px;
+
+    border-radius: 24px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0, 0, 0, 0.18);
+
+}
+
+
+
+/* ========================================
+   MONTH BUTTONS
+======================================== */
+
+.calendar-months {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    margin-bottom: 28px;
+
+}
+
+
+.month-button {
+
+    border: none;
+
+    border-radius: 999px;
+
+    padding: 8px 13px;
+
+    background: transparent;
+
+    color: #999;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+}
+
+
+.month-button.active {
+
+    background: #222;
+
+    color: #fff;
+
+}
+
+
+
+/* ========================================
+   WEEKDAY
+======================================== */
+
+.calendar-weekdays {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    margin-bottom: 10px;
+
+}
+
+
+.calendar-weekdays span {
+
+    text-align: center;
+
+    color: #aaa;
+
+    font-size: 12px;
+
+}
+
+
+
+/* ========================================
+   CALENDAR DAYS
+======================================== */
+
+.calendar-days {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 6px;
+
+}
+
+
+.calendar-day {
+
+    position: relative;
+
+    aspect-ratio: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #333;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+}
+
+
+.calendar-day:hover:not(.empty) {
+
+    background: #f3f3f3;
+
+}
+
+
+.calendar-day.selected {
+
+    background: #222;
+
+    color: #fff;
+
+}
+
+
+.calendar-day.has-data::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 5px;
+
+    left: 50%;
+
+    width: 3px;
+
+    height: 3px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background: #777;
+
+}
+
+
+.calendar-day.selected.has-data::after {
+
+    background: #fff;
+
+}
+
+
+.calendar-day.empty {
+
+    pointer-events: none;
+
+}
+
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+
+    .calendar-overlay {
+
+        padding: 24px;
+
+    }
+
+
+    .calendar {
+
+        width: 100%;
+
+        max-width: 390px;
+
+        padding: 24px 18px;
+
+        border-radius: 22px;
+
+    }
+
+
+    .calendar-months {
+
+        margin-bottom: 24px;
+
+    }
+
+
+    .month-button {
+
+        padding: 7px 10px;
+
+        font-size: 13px;
+
+    }
+
+
+    .calendar-days {
+
+        gap: 4px;
+
+    }
+
+
+    .calendar-day {
+
+        font-size: 14px;
+
+    }
+
+}
