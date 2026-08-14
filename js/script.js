@@ -28,6 +28,9 @@ const dateButton =
 const calendar =
     document.getElementById("calendar");
 
+const calendarOverlay =
+    document.getElementById("calendarOverlay");
+
 const calendarDays =
     document.getElementById("calendarDays");
 
@@ -670,6 +673,24 @@ async function initialize() {
     renderCalendar();
 
 }
+
+
+calendarOverlay.addEventListener(
+    "click",
+    (event) => {
+
+        if (
+            event.target === calendarOverlay
+        ) {
+
+            calendarOverlay.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
 
 
 initialize();
