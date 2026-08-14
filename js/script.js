@@ -2,22 +2,20 @@
    기본 설정
 ======================================== */
 
-
-// 현재 처음 열 날짜
+// 처음 열 날짜
 let currentDate = new Date(2026, 7, 11);
 
-let calendarMonth =
-    currentDate.getMonth();
+// 현재 달력에서 보고 있는 월
+let calendarMonth = currentDate.getMonth();
 
+// 대화가 존재하는 날짜
 let availableDates = [];
 
 // 발신자 이름
 const SENDER_NAME = "서준";
 
-
 // 프로필 이미지
 const PROFILE_IMAGE = "assets/profile/profile.png";
-
 
 
 /* ========================================
@@ -48,17 +46,6 @@ const nextDate =
 const chatMessages =
     document.getElementById("chatMessages");
 
-const calendar =
-    document.getElementById("calendar");
-
-const calendarDays =
-    document.getElementById("calendarDays");
-
-const calendarTitle =
-    document.getElementById("calendarTitle");
-
-const monthButtons =
-    document.querySelectorAll(".month-button");
 
 /* ========================================
    날짜 → YYYY-MM-DD
@@ -77,41 +64,13 @@ function formatDate(date) {
         String(date.getDate())
             .padStart(2, "0");
 
-
     return `${year}-${month}-${day}`;
-}
-async function loadAvailableDates() {
-
-    try {
-
-        const response =
-            await fetch("./data/dates.json");
-
-        if (!response.ok) {
-            throw new Error();
-        }
-
-        availableDates =
-            await response.json();
-
-    }
-
-    catch (error) {
-
-        console.warn(
-            "dates.json을 불러오지 못했습니다."
-        );
-
-        availableDates = [];
-
-    }
 
 }
-
 
 
 /* ========================================
-   날짜 → 2021년 10월 7일 목요일
+   날짜 → 한글 날짜
 ======================================== */
 
 function formatKoreanDate(date) {
@@ -125,7 +84,6 @@ function formatKoreanDate(date) {
     const day =
         date.getDate();
 
-
     const weekdays = [
         "일요일",
         "월요일",
@@ -136,14 +94,12 @@ function formatKoreanDate(date) {
         "토요일"
     ];
 
-
     const weekday =
         weekdays[date.getDay()];
 
-
     return `${year}년 ${month}월 ${day}일 ${weekday}`;
-}
 
+}
 
 
 /* ========================================
@@ -155,12 +111,215 @@ function updateDateUI() {
     dateButton.textContent =
         formatKoreanDate(currentDate);
 
+}
 
-    datePicker.value =
-        formatDate(currentDate);
+
+/* ========================================
+   dates.json 불러오기
+======================================== */
+
+async function loadAvailableDates() {
+
+    try {
+
+        const response =
+            await fetch("./data/dates.json");
+
+        if (!response.ok) {
+            throw new Error(
+                "dates.json을 찾을 수 없습니다."
+            );
+        }
+
+        availableDates =
+            await response.json();
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "dates.json을 불러오지 못했습니다.",
+            error
+        );
+
+        availableDates = [];
+
+    }
 
 }
 
+
+/* ========================================
+   달력 그리기
+======================================== */
+
+function renderCalendar() {
+
+    const year =
+        currentDate.getFullYear();
+
+    const month =
+        calendarMonth;
+
+
+    /* 제목 */
+
+    calendarTitle.textContent =
+        `${year}년 ${month + 1}월`;
+
+
+    /* 기존 날짜 제거 */
+
+    calendarDays.innerHTML = "";
+
+
+    /* 해당 월의 첫 번째 요일 */
+
+    const firstDay =
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+
+    /* 해당 월의 마지막 날짜 */
+
+    const lastDate =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+
+    /* 앞쪽 빈칸 */
+
+    for (
+        let i = 0;
+        i < firstDay;
+        i++
+    ) {
+
+        const empty =
+            document.createElement("div");
+
+        empty.className =
+            "calendar-day empty";
+
+        calendarDays.appendChild(
+            empty
+        );
+
+    }
+
+
+    /* 날짜 생성 */
+
+    for (
+        let day = 1;
+        day <= lastDate;
+        day++
+    ) {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "calendar-day";
+
+        button.textContent =
+            day;
+
+
+        const dateString =
+            `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+
+        /* 대화가 존재하는 날짜 */
+
+        if (
+            availableDates.includes(dateString)
+        ) {
+
+            button.classList.add(
+                "has-data"
+            );
+
+        }
+
+
+        /* 현재 선택된 날짜 */
+
+        if (
+            dateString ===
+            formatDate(currentDate)
+        ) {
+
+            button.classList.add(
+                "selected"
+            );
+
+        }
+
+
+        /* 날짜 클릭 */
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                currentDate =
+                    new Date(
+                        year,
+                        month,
+                        day
+                    );
+
+                calendarMonth =
+                    month;
+
+
+                updateDateUI();
+
+                loadMessages();
+
+                renderCalendar();
+
+
+                calendar.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        calendarDays.appendChild(
+            button
+        );
+
+    }
+
+
+    /* 월 버튼 활성화 */
+
+    monthButtons.forEach(button => {
+
+        button.classList.toggle(
+
+            "active",
+
+            Number(
+                button.dataset.month
+            ) === month
+
+        );
+
+    });
+
+}
 
 
 /* ========================================
@@ -201,8 +360,9 @@ async function loadMessages() {
             await response.json();
 
 
-        renderMessages(messages);
-
+        renderMessages(
+            messages
+        );
 
     }
 
@@ -217,7 +377,6 @@ async function loadMessages() {
     }
 
 }
-
 
 
 /* ========================================
@@ -238,9 +397,7 @@ function renderMessages(messages) {
             "message-row";
 
 
-        /* -------------------------
-           메시지 내용
-        ------------------------- */
+        /* 메시지 내용 */
 
         const content =
             document.createElement("div");
@@ -249,9 +406,7 @@ function renderMessages(messages) {
             "message-content";
 
 
-        /* -------------------------
-           발신자 이름
-        ------------------------- */
+        /* 발신자 */
 
         const sender =
             document.createElement("div");
@@ -263,9 +418,7 @@ function renderMessages(messages) {
             SENDER_NAME;
 
 
-        /* -------------------------
-           말풍선 + 시간
-        ------------------------- */
+        /* 말풍선 + 시간 */
 
         const messageLine =
             document.createElement("div");
@@ -274,9 +427,7 @@ function renderMessages(messages) {
             "message-line";
 
 
-        /* -------------------------
-           시간
-        ------------------------- */
+        /* 시간 */
 
         const time =
             document.createElement("span");
@@ -288,12 +439,11 @@ function renderMessages(messages) {
             message.time || "";
 
 
+        /* 텍스트 메시지 */
 
-        /* =========================
-           텍스트 메시지
-        ========================= */
-
-        if (message.type === "text") {
+        if (
+            message.type === "text"
+        ) {
 
             const bubble =
                 document.createElement("div");
@@ -301,22 +451,21 @@ function renderMessages(messages) {
             bubble.className =
                 "message-bubble";
 
-
             bubble.textContent =
                 message.message;
 
-
-            messageLine.appendChild(bubble);
+            messageLine.appendChild(
+                bubble
+            );
 
         }
 
 
+        /* 이미지 메시지 */
 
-        /* =========================
-           이미지 메시지
-        ========================= */
-
-        else if (message.type === "image") {
+        else if (
+            message.type === "image"
+        ) {
 
             const bubble =
                 document.createElement("div");
@@ -331,43 +480,43 @@ function renderMessages(messages) {
             image.className =
                 "message-image";
 
-
             image.src =
                 message.src;
-
 
             image.alt =
                 "";
 
 
-            bubble.appendChild(image);
+            bubble.appendChild(
+                image
+            );
 
-            messageLine.appendChild(bubble);
+            messageLine.appendChild(
+                bubble
+            );
 
         }
 
 
+        /* 시간 */
 
-        /* -------------------------
-           시간 추가
-        ------------------------- */
-
-        messageLine.appendChild(time);
-
-
-        /* -------------------------
-           내용 조립
-        ------------------------- */
-
-        content.appendChild(sender);
-
-        content.appendChild(messageLine);
+        messageLine.appendChild(
+            time
+        );
 
 
+        /* 내용 조립 */
 
-        /* -------------------------
-           프로필
-        ------------------------- */
+        content.appendChild(
+            sender
+        );
+
+        content.appendChild(
+            messageLine
+        );
+
+
+        /* 프로필 */
 
         const profile =
             document.createElement("img");
@@ -382,39 +531,33 @@ function renderMessages(messages) {
             SENDER_NAME;
 
 
+        /* 최종 조립 */
 
-        /* -------------------------
-           최종 조립
-        ------------------------- */
+        row.appendChild(
+            profile
+        );
 
-        row.appendChild(profile);
+        row.appendChild(
+            content
+        );
 
-        row.appendChild(content);
+        chatMessages.appendChild(
+            row
+        );
 
-        chatMessages.appendChild(row);
+    });
 
-    }
-
-
-    );
-
-
-    /*
-     * 새로운 날짜를 열었을 때
-     * 페이지 맨 위로 이동
-     */
 
     window.scrollTo({
         top: 0,
-        behavior: "instant"
+        behavior: "auto"
     });
 
 }
 
 
-
 /* ========================================
-   날짜 이전
+   이전 날짜
 ======================================== */
 
 prevDate.addEventListener(
@@ -425,18 +568,21 @@ prevDate.addEventListener(
             currentDate.getDate() - 1
         );
 
+        calendarMonth =
+            currentDate.getMonth();
 
         updateDateUI();
 
         loadMessages();
 
+        renderCalendar();
+
     }
 );
 
 
-
 /* ========================================
-   날짜 다음
+   다음 날짜
 ======================================== */
 
 nextDate.addEventListener(
@@ -447,80 +593,63 @@ nextDate.addEventListener(
             currentDate.getDate() + 1
         );
 
+        calendarMonth =
+            currentDate.getMonth();
 
         updateDateUI();
 
         loadMessages();
 
+        renderCalendar();
+
     }
 );
 
 
-
 /* ========================================
-   날짜 선택
+   날짜 클릭 → 달력 열기
 ======================================== */
 
 dateButton.addEventListener(
     "click",
     () => {
 
-        /*
-         * 브라우저의 날짜 선택창
-         */
+        calendarMonth =
+            currentDate.getMonth();
 
-        if (datePicker.showPicker) {
 
-            datePicker.showPicker();
+        renderCalendar();
 
-        }
 
-        else {
-
-            datePicker.click();
-
-        }
+        calendar.classList.toggle(
+            "active"
+        );
 
     }
 );
-
 
 
 /* ========================================
-   날짜가 직접 선택되었을 때
+   4월 ~ 8월 선택
 ======================================== */
 
-datePicker.addEventListener(
-    "change",
-    () => {
+monthButtons.forEach(button => {
 
-        if (!datePicker.value) {
-            return;
+    button.addEventListener(
+        "click",
+        () => {
+
+            calendarMonth =
+                Number(
+                    button.dataset.month
+                );
+
+            renderCalendar();
+
         }
+    );
 
-
-        const [
-            year,
-            month,
-            day
-        ] = datePicker.value.split("-");
-
-
-        currentDate =
-            new Date(
-                Number(year),
-                Number(month) - 1,
-                Number(day)
-            );
-
-
-        updateDateUI();
-
-        loadMessages();
-
-    }
-);
-
+});
 
 
 /* ========================================
@@ -533,7 +662,7 @@ async function initialize() {
 
     updateDateUI();
 
-    loadMessages();
+    await loadMessages();
 
     calendarMonth =
         currentDate.getMonth();
@@ -541,5 +670,6 @@ async function initialize() {
     renderCalendar();
 
 }
+
 
 initialize();
