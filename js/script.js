@@ -5,7 +5,8 @@
 
 // 현재 처음 열 날짜
 let currentDate = new Date(2026, 7, 11);
-
+let calendarMonth =
+    currentDate.getMonth();
 
 // 발신자 이름
 const SENDER_NAME = "서준";
@@ -23,8 +24,17 @@ const PROFILE_IMAGE = "assets/profile/profile.png";
 const dateButton =
     document.getElementById("dateButton");
 
-const datePicker =
-    document.getElementById("datePicker");
+const calendar =
+    document.getElementById("calendar");
+
+const calendarDays =
+    document.getElementById("calendarDays");
+
+const calendarTitle =
+    document.getElementById("calendarTitle");
+
+const monthButtons =
+    document.querySelectorAll(".month-button");
 
 const prevDate =
     document.getElementById("prevDate");
