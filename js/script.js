@@ -5,8 +5,11 @@
 
 // 현재 처음 열 날짜
 let currentDate = new Date(2026, 7, 11);
+
 let calendarMonth =
     currentDate.getMonth();
+
+let availableDates = [];
 
 // 발신자 이름
 const SENDER_NAME = "서준";
@@ -45,7 +48,17 @@ const nextDate =
 const chatMessages =
     document.getElementById("chatMessages");
 
+const calendar =
+    document.getElementById("calendar");
 
+const calendarDays =
+    document.getElementById("calendarDays");
+
+const calendarTitle =
+    document.getElementById("calendarTitle");
+
+const monthButtons =
+    document.querySelectorAll(".month-button");
 
 /* ========================================
    날짜 → YYYY-MM-DD
@@ -66,6 +79,33 @@ function formatDate(date) {
 
 
     return `${year}-${month}-${day}`;
+}
+async function loadAvailableDates() {
+
+    try {
+
+        const response =
+            await fetch("./data/dates.json");
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
+        availableDates =
+            await response.json();
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "dates.json을 불러오지 못했습니다."
+        );
+
+        availableDates = [];
+
+    }
+
 }
 
 
