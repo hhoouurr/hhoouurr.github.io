@@ -2,6 +2,11 @@
     {
         "type": "text",
         "time": "오전 00:00",
-        "message": "안녕!"
+        "message": "한서준 첫방송"
+    },
+    {
+        "type": "text",
+        "time": "오전 00:00",
+        "message": "🦊"
     }
 ]
