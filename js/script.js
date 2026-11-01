@@ -68,9 +68,7 @@ function formatKoreanDate(date) {
         "토요일"
     ];
 
-    const weekday = weekdays[date.getDay()];
-
-    return `${year}년 ${month}월 ${day}일 ${weekday}`;
+    return `${year}년 ${month}월 ${day}일 ${weekdays[date.getDay()]}`;
 }
 
 
@@ -96,6 +94,7 @@ async function loadAvailableDates() {
         }
 
         availableDates = await response.json();
+
     } catch (error) {
         console.warn("dates.json을 불러오지 못했습니다.", error);
         availableDates = [];
@@ -116,10 +115,39 @@ async function loadAnniversaries() {
         }
 
         anniversaries = await response.json();
+
+        if (
+            typeof anniversaries !== "object" ||
+            anniversaries === null ||
+            Array.isArray(anniversaries)
+        ) {
+            throw new Error("기념일 데이터 형식이 올바르지 않습니다.");
+        }
+
     } catch (error) {
         console.warn("기념일 데이터를 불러오지 못했습니다.", error);
         anniversaries = {};
     }
+}
+
+
+/* ========================================
+   기념일 이름 가져오기
+======================================== */
+
+function getAnniversaryLabel(dateString) {
+    const anniversary = anniversaries[dateString];
+
+    if (!anniversary) {
+        return "";
+    }
+
+    // 한 날짜에 여러 기념일이 배열로 저장된 경우
+    if (Array.isArray(anniversary)) {
+        return anniversary.join(" / ");
+    }
+
+    return String(anniversary);
 }
 
 
@@ -131,19 +159,13 @@ function renderCalendar() {
     const year = currentDate.getFullYear();
     const month = calendarMonth;
 
-    // 기존 날짜 제거
     calendarDays.innerHTML = "";
 
-    // 해당 월의 첫 번째 요일
     const firstDay = new Date(year, month, 1).getDay();
-
-    // 해당 월의 마지막 날짜
     const lastDate = new Date(year, month + 1, 0).getDate();
 
 
-    /* =========================
-       앞쪽 빈칸
-    ========================= */
+    /* 앞쪽 빈칸 */
 
     for (let i = 0; i < firstDay; i++) {
         const empty = document.createElement("div");
@@ -153,9 +175,7 @@ function renderCalendar() {
     }
 
 
-    /* =========================
-       날짜 생성
-    ========================= */
+    /* 날짜 생성 */
 
     for (let day = 1; day <= lastDate; day++) {
         const button = document.createElement("button");
@@ -169,50 +189,41 @@ function renderCalendar() {
 
         // 날짜 숫자
         const dayNumber = document.createElement("span");
+
         dayNumber.className = "calendar-day-number";
         dayNumber.textContent = day;
 
         button.appendChild(dayNumber);
 
 
-        /* =========================
-           기념일 이름 표시
-        ========================= */
+        // 기념일 이름
+        const anniversaryLabel = getAnniversaryLabel(dateString);
 
-        if (anniversaries[dateString]) {
-            const anniversaryLabel = document.createElement("span");
+        if (anniversaryLabel) {
+            const label = document.createElement("span");
 
-            anniversaryLabel.className = "anniversary-label";
-            anniversaryLabel.textContent = anniversaries[dateString];
-            anniversaryLabel.title = anniversaries[dateString];
+            label.className = "anniversary-label";
+            label.textContent = anniversaryLabel;
+            label.title = anniversaryLabel;
 
             button.classList.add("has-anniversary");
-            button.appendChild(anniversaryLabel);
+            button.appendChild(label);
         }
 
 
-        /* =========================
-           대화가 있는 날짜
-        ========================= */
-
+        // 대화가 있는 날짜
         if (availableDates.includes(dateString)) {
             button.classList.add("has-data");
         }
 
 
-        /* =========================
-           현재 선택된 날짜
-        ========================= */
-
+        // 현재 선택된 날짜
         if (dateString === formatDate(currentDate)) {
             button.classList.add("selected");
         }
 
 
-        /* =========================
-           날짜 클릭
-        ========================= */
-
+        // 날짜 클릭
         button.addEventListener("click", () => {
             currentDate = new Date(year, month, day);
             calendarMonth = month;
@@ -221,7 +232,6 @@ function renderCalendar() {
             loadMessages();
             renderCalendar();
 
-            // 날짜 선택 후 오버레이 닫기
             calendarOverlay.classList.remove("active");
         });
 
@@ -229,10 +239,7 @@ function renderCalendar() {
     }
 
 
-    /* =========================
-       월 버튼 활성화
-    ========================= */
-
+    // 월 버튼 활성화
     monthButtons.forEach(button => {
         const buttonMonth = Number(button.dataset.month);
 
@@ -267,6 +274,7 @@ async function loadMessages() {
         const messages = await response.json();
 
         renderMessages(messages);
+
     } catch (error) {
         chatMessages.innerHTML = `
             <div class="empty-message">
@@ -289,10 +297,7 @@ function renderMessages(messages) {
         row.className = "message-row";
 
 
-        /* =========================
-           프로필
-        ========================= */
-
+        // 프로필
         const profile = document.createElement("img");
 
         profile.className = "profile";
@@ -300,36 +305,24 @@ function renderMessages(messages) {
         profile.alt = SENDER_NAME;
 
 
-        /* =========================
-           메시지 전체
-        ========================= */
-
+        // 메시지 전체
         const content = document.createElement("div");
         content.className = "message-content";
 
 
-        /* =========================
-           발신자
-        ========================= */
-
+        // 발신자
         const sender = document.createElement("div");
 
         sender.className = "sender-name";
         sender.textContent = SENDER_NAME;
 
 
-        /* =========================
-           말풍선 + 시간
-        ========================= */
-
+        // 말풍선 + 시간
         const messageLine = document.createElement("div");
         messageLine.className = "message-line";
 
 
-        /* =========================
-           텍스트
-        ========================= */
-
+        // 텍스트
         if (message.type === "text") {
             const bubble = document.createElement("div");
 
@@ -340,10 +333,7 @@ function renderMessages(messages) {
         }
 
 
-        /* =========================
-           이미지
-        ========================= */
-
+        // 이미지
         else if (message.type === "image") {
             const bubble = document.createElement("div");
 
@@ -360,10 +350,7 @@ function renderMessages(messages) {
         }
 
 
-        /* =========================
-           시간
-        ========================= */
-
+        // 시간
         const time = document.createElement("span");
 
         time.className = "message-time";
@@ -372,10 +359,7 @@ function renderMessages(messages) {
         messageLine.appendChild(time);
 
 
-        /* =========================
-           조립
-        ========================= */
-
+        // 조립
         content.appendChild(sender);
         content.appendChild(messageLine);
 
@@ -464,7 +448,6 @@ calendarOverlay.addEventListener("click", event => {
 ======================================== */
 
 async function initialize() {
-    // 대화 날짜와 기념일 데이터를 모두 불러오기
     await Promise.all([
         loadAvailableDates(),
         loadAnniversaries()
@@ -480,35 +463,3 @@ async function initialize() {
 }
 
 initialize();
-
-
-/* ========================================
-   달력 기념일 표시
-======================================== */
-
-.calendar-day {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    min-width: 0;
-}
-
-.calendar-day-number {
-    display: block;
-    line-height: 1.2;
-}
-
-.anniversary-label {
-    display: block;
-    width: 100%;
-    font-size: 8px;
-    line-height: 1.2;
-    font-weight: 400;
-    color: #1687e8;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
