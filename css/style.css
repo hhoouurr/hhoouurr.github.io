@@ -615,58 +615,66 @@ body {
    MONTH BUTTONS
 ======================================== */
 
+
 .calendar-months {
-
     display: flex;
-
-    justify-content: space-between;
-
+    justify-content: flex-start;
+    flex-wrap: nowrap;
     gap: 5px;
 
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+
     margin-bottom: 24px;
+    padding: 4px 2px 10px;
 
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
 }
-
 
 .month-button {
-
-    flex: 1;
+    flex: 0 0 auto;
 
     border: none;
-
     border-radius: 14px;
-
-    padding: 10px 5px;
+    padding: 10px 12px;
 
     background: transparent;
-
     color: #7d8790;
-
     font-family: inherit;
-
     font-size: 15px;
-
+    white-space: nowrap;
     cursor: pointer;
-
 }
-
 
 .month-button:hover {
-
     background: #eef3f6;
-
 }
-
 
 .month-button.active {
-
     background: #e2edf4;
-
     color: #1687e8;
-
     font-weight: 700;
-
 }
+
+.calendar-months::-webkit-scrollbar {
+    height: 4px;
+}
+
+.calendar-months::-webkit-scrollbar-thumb {
+    background: #cccccc;
+    border-radius: 4px;
+}
+
+.calendar-months::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 
 
 /* ========================================
