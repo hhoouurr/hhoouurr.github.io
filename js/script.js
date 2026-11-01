@@ -480,3 +480,35 @@ async function initialize() {
 }
 
 initialize();
+
+
+/* ========================================
+   달력 기념일 표시
+======================================== */
+
+.calendar-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 0;
+}
+
+.calendar-day-number {
+    display: block;
+    line-height: 1.2;
+}
+
+.anniversary-label {
+    display: block;
+    width: 100%;
+    font-size: 8px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #1687e8;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
