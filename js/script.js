@@ -4,7 +4,7 @@
 ======================================== */
 
 // 처음 열 날짜
-let currentDate = new Date(2026, 7, 11);
+let currentDate = new Date(2026, 4, 19);
 
 // 현재 달력에서 보고 있는 월
 let calendarMonth = currentDate.getMonth();
