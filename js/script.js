@@ -111,25 +111,31 @@ async function loadAnniversaries() {
         const response = await fetch("./data/anniversaries.json");
 
         if (!response.ok) {
-            throw new Error("anniversaries.json을 찾을 수 없습니다.");
+            throw new Error(
+                `파일을 불러오지 못했습니다. 상태 코드: ${response.status}`
+            );
         }
 
-        anniversaries = await response.json();
+        const data = await response.json();
 
         if (
-            typeof anniversaries !== "object" ||
-            anniversaries === null ||
-            Array.isArray(anniversaries)
+            typeof data !== "object" ||
+            data === null ||
+            Array.isArray(data)
         ) {
             throw new Error("기념일 데이터 형식이 올바르지 않습니다.");
         }
 
+        anniversaries = data;
+
+        console.log("기념일 데이터 로드 성공:", anniversaries);
+        console.log("불러온 기념일 개수:", Object.keys(anniversaries).length);
+
     } catch (error) {
-        console.warn("기념일 데이터를 불러오지 못했습니다.", error);
+        console.error("기념일 데이터 로드 실패:", error);
         anniversaries = {};
     }
 }
-
 
 /* ========================================
    기념일 이름 가져오기
@@ -142,14 +148,12 @@ function getAnniversaryLabel(dateString) {
         return "";
     }
 
-    // 한 날짜에 여러 기념일이 배열로 저장된 경우
     if (Array.isArray(anniversary)) {
         return anniversary.join(" / ");
     }
 
     return String(anniversary);
 }
-
 
 /* ========================================
    달력 그리기
