@@ -1606,3 +1606,78 @@ body {
     text-overflow: ellipsis;
     pointer-events: none;
 }
+
+/* ========================================
+   여러 날 일정 타임블록
+======================================== */
+
+.calendar-days {
+    position: relative;
+    isolation: isolate;
+}
+
+/* 블록을 날짜 칸 위에 배치하는 레이어 */
+.calendar-event-layer {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    column-gap: 6px;
+    row-gap: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* 연결된 일정 블록 */
+.calendar-event-bar {
+    align-self: start;
+    min-width: 0;
+    height: 15px;
+    margin-top: 31px;
+    padding: 1px 3px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    background: var(--event-color);
+    color: #fff;
+
+    font-size: 8px;
+    line-height: 13px;
+    font-weight: 500;
+
+    border-radius: 0;
+}
+
+/* 첫 구간의 왼쪽 끝 */
+.calendar-event-bar:not(.continuation) {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+/* 마지막 구간은 JavaScript에서 별도 처리 가능 */
+.calendar-event-bar {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* 날짜 숫자와 선택 효과는 블록 위에 유지 */
+.calendar-day {
+    z-index: 1;
+}
+
+/* 모바일 달력 */
+@media (max-width: 600px) {
+    .calendar-event-layer {
+        column-gap: 4px;
+    }
+
+    .calendar-event-bar {
+        height: 13px;
+        margin-top: 29px;
+        padding: 0 2px;
+        font-size: 7px;
+        line-height: 12px;
+    }
+}
