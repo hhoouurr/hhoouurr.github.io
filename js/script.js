@@ -159,6 +159,7 @@ function getAnniversaryLabel(dateString) {
    달력 그리기
 ======================================== */
 
+
 function renderCalendar() {
     const year = currentDate.getFullYear();
     const month = calendarMonth;
@@ -167,67 +168,49 @@ function renderCalendar() {
 
     const firstDay = new Date(year, month, 1).getDay();
     const lastDate = new Date(year, month + 1, 0).getDate();
+    const weekCount = Math.ceil((firstDay + lastDate) / 7);
 
+    calendarDays.style.position = "relative";
 
-    /* 앞쪽 빈칸 */
-
+    // 날짜 칸 생성
     for (let i = 0; i < firstDay; i++) {
         const empty = document.createElement("div");
         empty.className = "calendar-day empty";
-
         calendarDays.appendChild(empty);
     }
 
-
-    /* 날짜 생성 */
-
     for (let day = 1; day <= lastDate; day++) {
         const button = document.createElement("button");
-
         button.type = "button";
         button.className = "calendar-day";
 
-        const dateString =
-            `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        const dateString = formatDate(new Date(year, month, day));
 
-
-        // 날짜 숫자
         const dayNumber = document.createElement("span");
-
         dayNumber.className = "calendar-day-number";
         dayNumber.textContent = day;
-
         button.appendChild(dayNumber);
 
-
-        // 기념일 이름
+        // 기존 하루짜리 기념일
         const anniversaryLabel = getAnniversaryLabel(dateString);
 
         if (anniversaryLabel) {
             const label = document.createElement("span");
-
             label.className = "anniversary-label";
             label.textContent = anniversaryLabel;
             label.title = anniversaryLabel;
-
             button.classList.add("has-anniversary");
             button.appendChild(label);
         }
 
-
-        // 대화가 있는 날짜
         if (availableDates.includes(dateString)) {
             button.classList.add("has-data");
         }
 
-
-        // 현재 선택된 날짜
         if (dateString === formatDate(currentDate)) {
             button.classList.add("selected");
         }
 
-
-        // 날짜 클릭
         button.addEventListener("click", () => {
             currentDate = new Date(year, month, day);
             calendarMonth = month;
@@ -235,25 +218,103 @@ function renderCalendar() {
             updateDateUI();
             loadMessages();
             renderCalendar();
-
             calendarOverlay.classList.remove("active");
         });
 
         calendarDays.appendChild(button);
     }
 
+    // 여러 날 일정 블록 레이어
+    const eventLayer = document.createElement("div");
+    eventLayer.className = "calendar-event-layer";
+    eventLayer.style.gridTemplateRows = `repeat(${weekCount}, 1fr)`;
+
+    // 여러 날 일정 가져오기
+    const events = Array.isArray(anniversaries.events)
+        ? anniversaries.events
+        : [];
+
+    const monthStart = new Date(year, month, 1);
+    const monthEnd = new Date(year, month, lastDate);
+
+    // 각 일정의 해당 월 부분을 주 단위로 나누어 표시
+    events.forEach((event, eventIndex) => {
+        if (!event.start || !event.end || !event.title) return;
+
+        const start = new Date(`${event.start}T00:00:00`);
+        const end = new Date(`${event.end}T00:00:00`);
+
+        if (
+            Number.isNaN(start.getTime()) ||
+            Number.isNaN(end.getTime()) ||
+            end < start
+        ) return;
+
+        if (end < monthStart || start > monthEnd) return;
+
+        const visibleStart = start < monthStart ? monthStart : start;
+        const visibleEnd = end > monthEnd ? monthEnd : end;
+
+        let cursor = new Date(visibleStart);
+
+        while (cursor <= visibleEnd) {
+            const day = cursor.getDate();
+            const column = (firstDay + day - 1) % 7;
+            const row = Math.floor((firstDay + day - 1) / 7);
+
+            const daysUntilSunday = 6 - column;
+            const segmentEnd = new Date(cursor);
+            segmentEnd.setDate(
+                Math.min(
+                    cursor.getDate() + daysUntilSunday,
+                    visibleEnd.getDate()
+                )
+            );
+
+            const segmentLength =
+                Math.round((segmentEnd - cursor) / 86400000) + 1;
+
+            const bar = document.createElement("div");
+            bar.className = "calendar-event-bar";
+            bar.style.gridColumn = `${column + 1} / span ${segmentLength}`;
+            bar.style.gridRow = String(row + 1);
+            bar.style.setProperty(
+                "--event-color",
+                event.color || "#279e83"
+            );
+
+            // 일정이 시작되는 구간에만 이름 표시
+            const isFirstSegment =
+                formatDate(cursor) === event.start;
+
+            if (isFirstSegment) {
+                bar.textContent = event.title;
+                bar.title = event.title;
+            } else {
+                bar.classList.add("continuation");
+                bar.title = event.title;
+            }
+
+            // 겹치는 일정의 순서를 위해 인덱스 사용
+            bar.dataset.eventIndex = eventIndex;
+
+            eventLayer.appendChild(bar);
+
+            cursor = new Date(segmentEnd);
+            cursor.setDate(cursor.getDate() + 1);
+        }
+    });
+
+    calendarDays.appendChild(eventLayer);
 
     // 월 버튼 활성화
     monthButtons.forEach(button => {
-        const buttonMonth = Number(button.dataset.month);
-
         button.classList.toggle(
             "active",
-            buttonMonth === month
+            Number(button.dataset.month) === month
         );
     });
 }
-
 
 /* ========================================
    메시지 불러오기
