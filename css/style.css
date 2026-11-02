@@ -1568,3 +1568,41 @@ body {
     text-overflow: ellipsis;
     pointer-events: none;
 }
+
+/* ========================================
+   달력 날짜 위치 고정
+======================================== */
+
+.calendar-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2px;
+    padding: 5px 1px;
+    position: relative;
+}
+
+/* 날짜 숫자는 항상 같은 높이에 배치 */
+.calendar-day-number {
+    display: block;
+    flex: 0 0 16px;
+    line-height: 16px;
+    text-align: center;
+}
+
+/* 기념일은 날짜 숫자 아래에 표시 */
+.anniversary-label {
+    display: block;
+    width: 100%;
+    height: 10px;
+    line-height: 10px;
+    font-size: 7px;
+    font-weight: 400;
+    color: #1687e8;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+}
