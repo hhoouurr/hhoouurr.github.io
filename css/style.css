@@ -1770,3 +1770,163 @@ body {
         font-size: 10px;
     }
 }
+
+/* ========================================
+   SEOJOON ARCHIVE BLACK & YELLOW THEME
+   기존 레이아웃은 유지하고 색상만 변경
+======================================== */
+
+/* 전체 배경 */
+html,
+body {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+.archive {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+/* 상단 날짜 영역 */
+.top-bar {
+    background: rgba(0, 0, 0, 0.96);
+}
+
+.date-button {
+    color: #FFFFFF;
+}
+
+/* 날짜 이동 버튼 */
+.date-nav {
+    background: #FFE500;
+    box-shadow: none;
+}
+
+.date-nav span,
+.date-nav.prev span,
+.date-nav.next span {
+    color: #000000;
+}
+
+/* 보낸 사람 이름 */
+.sender-name {
+    color: #FFFFFF;
+}
+
+/* 채팅 말풍선 */
+.message-bubble:not(.image-bubble) {
+    background: #FFE500;
+    color: #000000;
+    box-shadow: none;
+}
+
+/* 말풍선 내부의 모든 텍스트 */
+.message-bubble:not(.image-bubble) * {
+    color: #000000;
+}
+
+/* 말풍선 바깥의 시간 */
+.message-time {
+    color: #FFFFFF;
+}
+
+/* 이미지 메시지는 기존 모습 유지 */
+.image-bubble {
+    background: transparent;
+}
+
+/* 로딩 및 빈 메시지 안내 */
+.loading,
+.empty-message {
+    color: #FFFFFF;
+}
+
+/* ========================================
+   CALENDAR THEME
+======================================== */
+
+/* 달력 바깥 배경 */
+.calendar {
+    background: #000000;
+    color: #FFFFFF;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* 달력 제목 */
+.calendar-title {
+    color: #FFFFFF;
+}
+
+/* 월 선택 버튼 */
+.month-button {
+    color: #AAAAAA;
+}
+
+.month-button:hover {
+    background: #292929;
+    color: #FFFFFF;
+}
+
+.month-button.active {
+    background: #FFE500;
+    color: #000000;
+}
+
+/* 요일 */
+.calendar-weekdays span {
+    color: #AAAAAA;
+}
+
+.calendar-weekdays span:first-child {
+    color: #FFE500;
+}
+
+.calendar-weekdays span:last-child {
+    color: #FFE500;
+}
+
+/* 날짜 */
+.calendar-day {
+    color: #FFFFFF;
+}
+
+.calendar-day:hover:not(.empty) {
+    background: #292929;
+}
+
+/* 선택된 날짜 */
+.calendar-day.selected {
+    background: #FFE500;
+    color: #000000;
+}
+
+/* 대화가 있는 날짜 표시 */
+.calendar-day.has-data::after {
+    background: #FFE500;
+}
+
+/* 기념일 이름 */
+.anniversary-label {
+    color: #FFE500;
+}
+
+/* 여러 날 일정 */
+.calendar-event-bar {
+    background: #FFE500;
+    color: #000000;
+}
+
+/* 달력 배경 오버레이 */
+.calendar-overlay {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+/* ========================================
+   LOADING INTRO
+   기존 블루 퍼플 색상 유지
+======================================== */
+
+.loading-screen {
+    background-color: #4D4BFF;
+}
