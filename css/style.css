@@ -1943,3 +1943,115 @@ body {
 .loading-screen {
     background-color: #4D4BFF;
 }
+
+
+/* ========================================
+   CALENDAR BLACK & WHITE THEME
+======================================== */
+
+/* 달력 전체 */
+.calendar {
+    background: #111111;
+    color: #FFFFFF;
+    font-family: 'Fredoka', sans-serif;
+    border: 1px solid #303030;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* 월 선택 영역 */
+.calendar-months {
+    scrollbar-width: thin;
+    scrollbar-color: #555555 #111111;
+}
+
+/* 크롬, 사파리 스크롤바 */
+.calendar-months::-webkit-scrollbar {
+    height: 4px;
+}
+
+.calendar-months::-webkit-scrollbar-track {
+    background: #111111;
+    border-radius: 10px;
+}
+
+.calendar-months::-webkit-scrollbar-thumb {
+    background: #555555;
+    border-radius: 10px;
+}
+
+.calendar-months::-webkit-scrollbar-thumb:hover {
+    background: #888888;
+}
+
+/* 월 버튼 */
+.month-button {
+    font-family: 'Fredoka', sans-serif;
+    color: #888888;
+    background: transparent;
+}
+
+.month-button:hover {
+    background: #292929;
+    color: #FFFFFF;
+}
+
+.month-button.active {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+/* 요일 */
+.calendar-weekdays span {
+    color: #888888;
+    font-family: 'Fredoka', sans-serif;
+}
+
+/* 날짜 기본 */
+.calendar-day {
+    color: #FFFFFF;
+    font-family: 'Fredoka', sans-serif;
+}
+
+/* 날짜에 마우스를 올렸을 때 */
+.calendar-day:hover:not(.empty) {
+    background: #292929;
+}
+
+/* 대화가 있는 날짜의 점 제거 */
+.calendar-day.has-data::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* 대화가 없는 날짜는 희미하게 */
+.calendar-day:not(.empty):not(.has-data):not(.selected) {
+    opacity: 0.35;
+}
+
+/* 대화가 있는 날짜는 선명하게 */
+.calendar-day.has-data {
+    opacity: 1;
+}
+
+/* 선택한 날짜는 항상 선명하게 */
+.calendar-day.selected {
+    background: #FFFFFF;
+    color: #000000;
+    opacity: 1;
+}
+
+/* 기념일 글씨 */
+.anniversary-label {
+    color: #FFFFFF;
+}
+
+/* 여러 날 일정 블록도 흑백으로 */
+.calendar-event-bar {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+/* 달력 오버레이 */
+.calendarOverlay {
+    background: rgba(0, 0, 0, 0.8);
+}
