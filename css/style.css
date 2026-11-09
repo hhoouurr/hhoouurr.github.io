@@ -1798,15 +1798,28 @@ body {
 }
 
 /* 날짜 이동 버튼 */
+
+/* 상단 날짜 이동 버튼 */
 .date-nav {
-    background: #FFE500;
+    background: #303033;
     box-shadow: none;
+    color: #FFFFFF;
 }
 
 .date-nav span,
 .date-nav.prev span,
 .date-nav.next span {
-    color: #000000;
+    color: #FFFFFF;
+}
+
+/* 화살표 아이콘 */
+.date-nav svg {
+    stroke: #FFFFFF;
+    color: #FFFFFF;
+}
+
+.date-nav:hover {
+    background: #414145;
 }
 
 /* 보낸 사람 이름 */
