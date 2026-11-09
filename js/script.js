@@ -1,4 +1,3 @@
-
 /* ========================================
    기본 설정
 ======================================== */
@@ -196,7 +195,7 @@ function renderCalendar() {
 
         if (anniversaryLabel) {
             const label = document.createElement("span");
-            label.className = "anniversary-label single-anniversary-label";
+            label.className = "anniversary-label";
             label.textContent = anniversaryLabel;
             label.title = anniversaryLabel;
             button.classList.add("has-anniversary");
@@ -275,7 +274,7 @@ function renderCalendar() {
                 Math.round((segmentEnd - cursor) / 86400000) + 1;
 
             const bar = document.createElement("div");
-            bar.className = "calendar-event-bar event-segment";
+            bar.className = "calendar-event-bar";
             bar.style.gridColumn = `${column + 1} / span ${segmentLength}`;
             bar.style.gridRow = String(row + 1);
             bar.style.setProperty(
@@ -288,18 +287,12 @@ function renderCalendar() {
                 formatDate(cursor) === event.start;
 
             if (isFirstSegment) {
-    bar.classList.add("event-first-segment");
-    bar.textContent = event.title;
-    bar.title = event.title;
-} else {
-    bar.classList.add("continuation");
-    bar.title = event.title;
-}
-
-// 해당 일정의 마지막 구간인지 확인
-if (formatDate(segmentEnd) === event.end) {
-    bar.classList.add("event-last-segment");
-}
+                bar.textContent = event.title;
+                bar.title = event.title;
+            } else {
+                bar.classList.add("continuation");
+                bar.title = event.title;
+            }
 
             // 겹치는 일정의 순서를 위해 인덱스 사용
             bar.dataset.eventIndex = eventIndex;
