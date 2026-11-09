@@ -1,3 +1,6 @@
+/* 귀여운 둥근 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+
 /* ========================================
    RESET
 ======================================== */
@@ -1679,5 +1682,91 @@ body {
         padding: 0 2px;
         font-size: 7px;
         line-height: 12px;
+    }
+}
+
+
+/* ========================================
+   SEOJOON ARCHIVE 로딩 인트로
+======================================== */
+
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #4D4BFF;
+
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.loading-screen.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    gap: 0;
+}
+
+.loading-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -1px;
+    color: #F4F2ED;
+}
+
+.loading-illustration {
+    display: block;
+    width: 125px;
+    height: 125px;
+    margin: 8px 0 2px;
+
+    object-fit: contain;
+}
+
+.loading-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+
+    font-family: 'Fredoka', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: 0.3px;
+    color: #F4F2ED;
+    white-space: nowrap;
+}
+
+/* 작은 화면 대응 */
+@media (max-width: 600px) {
+    .loading-title {
+        font-size: 42px;
+    }
+
+    .loading-illustration {
+        width: 110px;
+        height: 110px;
+    }
+
+    .loading-info {
+        font-size: 10px;
     }
 }
