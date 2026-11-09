@@ -2055,22 +2055,3 @@ body {
 .calendarOverlay {
     background: rgba(0, 0, 0, 0.8);
 }
-
-/* 단일 기념일: 전체 텍스트 표시 및 단어 단위 줄바꿈 */
-.anniversary-label.single-anniversary-label {
-    white-space: normal !important;
-    text-overflow: clip !important;
-    overflow: visible !important;
-    word-break: keep-all;
-    overflow-wrap: break-word;
-}
-
-/* 여러 날 기념일: 블록의 양 끝을 둥글게 */
-.calendar-event-bar.event-segment {
-    border-radius: 999px !important;
-}
-
-/* 일정이 주 단위로 나뉘어도 각 구간의 끝을 둥글게 */
-.calendar-event-bar.event-segment.continuation {
-    border-radius: 999px !important;
-}
