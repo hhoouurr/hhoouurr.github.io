@@ -2055,3 +2055,69 @@ body {
 .calendarOverlay {
     background: rgba(0, 0, 0, 0.8);
 }
+
+
+/* ========================================
+   기념일 및 여러 날 일정 글씨 정렬
+======================================== */
+
+/* 하루짜리 기념일 */
+.anniversary-label {
+    display: block;
+    width: 100%;
+    height: 15px;
+    line-height: 15px;
+
+    margin-top: 0;
+
+    font-size: 8px;
+    font-weight: 500;
+    text-align: center;
+
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+
+    position: relative;
+    z-index: 4;
+}
+
+/* 여러 날 일정 블록 */
+.calendar-event-bar {
+    height: 15px;
+    margin-top: 31px;
+
+    padding: 0 4px;
+
+    font-size: 8px;
+    line-height: 15px;
+    font-weight: 500;
+
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+
+    border-radius: 5px;
+}
+
+/* 이어지는 블록도 동일한 글씨 스타일 */
+.calendar-event-bar.continuation {
+    border-radius: 5px;
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+    .anniversary-label {
+        height: 13px;
+        line-height: 13px;
+        font-size: 7px;
+    }
+
+    .calendar-event-bar {
+        height: 13px;
+        margin-top: 29px;
+
+        font-size: 7px;
+        line-height: 13px;
+    }
+}
