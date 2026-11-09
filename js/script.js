@@ -512,19 +512,44 @@ calendarOverlay.addEventListener("click", event => {
    시작
 ======================================== */
 
+
+// 로딩 화면 시작 시간
+const loadingStartTime = Date.now();
+
+// 로딩 화면 닫기
+async function hideLoadingScreen() {
+    const minimumDuration = 900;
+    const elapsed = Date.now() - loadingStartTime;
+    const remaining = Math.max(0, minimumDuration - elapsed);
+
+    await new Promise(resolve => setTimeout(resolve, remaining));
+
+    const loadingScreen = document.getElementById("loadingScreen");
+
+    if (loadingScreen) {
+        loadingScreen.classList.add("is-hidden");
+    }
+}
+
+// 홈페이지 초기화
 async function initialize() {
-    await Promise.all([
-        loadAvailableDates(),
-        loadAnniversaries()
-    ]);
+    try {
+        await Promise.all([
+            loadAvailableDates(),
+            loadAnniversaries()
+        ]);
 
-    updateDateUI();
+        updateDateUI();
 
-    await loadMessages();
+        await loadMessages();
 
-    calendarMonth = currentDate.getMonth();
+        calendarMonth = currentDate.getMonth();
 
-    renderCalendar();
+        renderCalendar();
+
+    } finally {
+        await hideLoadingScreen();
+    }
 }
 
 initialize();
